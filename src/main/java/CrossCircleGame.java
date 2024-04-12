@@ -1,20 +1,16 @@
 import java.util.Scanner;
 
 public class CrossCircleGame {
-    static char[] box = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    static boolean boxAvailable = false;
-    static byte winner = 0;
+    private char[] box = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    private boolean boxAvailable = false;
+    private byte winner = 0;
 
-    public static boolean checkIsAlreadyHaveWinner() {
-        if ((box[0] == 'X' && box[1] == 'X' && box[2] == 'X') || (box[3] == 'X' && box[4] == 'X' && box[5] == 'X') || (box[6] == 'X' && box[7] == 'X' && box[8] == 'X') ||
-                (box[0] == 'X' && box[3] == 'X' && box[6] == 'X') || (box[1] == 'X' && box[4] == 'X' && box[7] == 'X') || (box[2] == 'X' && box[5] == 'X' && box[8] == 'X') ||
-                (box[0] == 'X' && box[4] == 'X' && box[8] == 'X') || (box[2] == 'X' && box[4] == 'X' && box[6] == 'X')) {
+    public boolean checkIsAlreadyHaveWinner() {
+        if (didPlayerWin('X')) {
             winner = 1;
             return true;
         }
-        if ((box[0] == 'O' && box[1] == 'O' && box[2] == 'O') || (box[3] == 'O' && box[4] == 'O' && box[5] == 'O') || (box[6] == 'O' && box[7] == 'O' && box[8] == 'O') ||
-                (box[0] == 'O' && box[3] == 'O' && box[6] == 'O') || (box[1] == 'O' && box[4] == 'O' && box[7] == 'O') || (box[2] == 'O' && box[5] == 'O' && box[8] == 'O') ||
-                (box[0] == 'O' && box[4] == 'O' && box[8] == 'O') || (box[2] == 'O' && box[4] == 'O' && box[6] == 'O')) {
+        if (didPlayerWin('O')) {
             winner = 2;
             return true;
         }
@@ -25,7 +21,13 @@ public class CrossCircleGame {
         return false;
     }
 
-    public static void playerInput() {
+    private boolean didPlayerWin(char symbol) {
+        return (box[0] == symbol && box[1] == symbol && box[2] == symbol) || (box[3] == symbol && box[4] == symbol && box[5] == symbol) || (box[6] == symbol && box[7] == symbol && box[8] == symbol) ||
+                (box[0] == symbol && box[3] == symbol && box[6] == symbol) || (box[1] == symbol && box[4] == symbol && box[7] == symbol) || (box[2] == symbol && box[5] == symbol && box[8] == symbol) ||
+                (box[0] == symbol && box[4] == symbol && box[8] == symbol) || (box[2] == symbol && box[4] == symbol && box[6] == symbol);
+    }
+
+    public void playerInput() {
         byte input;
         Scanner scan = new Scanner(System.in);
         while (true) {
@@ -43,7 +45,7 @@ public class CrossCircleGame {
         }
     }
 
-    public static boolean sendWinnerMassege() {
+    public boolean sendWinnerMassege() {
         if (winner == 1) {
             System.out.println("You won the game!\nCreated by Shreyas Saha. Thanks for playing!");
             return true;
@@ -57,7 +59,7 @@ public class CrossCircleGame {
         return false;
     }
 
-    public static void playerAIGenerator() {
+    public void playerAIGenerator() {
         byte rand;
         while (true) {
             rand = (byte) (Math.random() * (9 - 1 + 1) + 1);
@@ -68,7 +70,7 @@ public class CrossCircleGame {
         }
     }
 
-    public static void checkIsMapNotFull() {
+    public void checkIsMapNotFull() {
         for (int i = 0; i < 9; i++) {
             if (box[i] != 'X' && box[i] != 'O') {
                 boxAvailable = true;
@@ -77,12 +79,12 @@ public class CrossCircleGame {
         }
     }
 
-    public static void prepareToGameCleanMap() {
+    public void prepareToGameCleanMap() {
         for (int i = 0; i < 9; i++)
             box[i] = ' ';
     }
 
-    public static void printMap() {
+    public void printMap() {
         System.out.println("Enter box number to select. Enjoy!\n");
         System.out.println("\n " + box[0] + " | " + box[1] + " | " + box[2] + " ");
         System.out.println("-----------");
